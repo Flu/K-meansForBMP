@@ -7,7 +7,6 @@
 using namespace std;
 
 class BitmapImage {
-protected:
 	FILE *inputFile;
 	unsigned char *header;
 	Pixels *pixels;

@@ -1,14 +1,16 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include "BitmapImage.h"
 using namespace std;
 
 class Pixels {
+private:
 	unsigned int width, height;
 	unsigned char **values;
 public:
 	Pixels();
-	Pixels(unsigned char**, unsigned int, unsigned int);
-	Pixels(const unsigned char*);
+	Pixels(const unsigned char**, const unsigned int&, const unsigned int&);
 	Pixels(const Pixels&);
 	unsigned char& operator()(const unsigned, const unsigned);
 	unsigned char* operator[](const unsigned);
@@ -16,4 +18,3 @@ public:
 	friend class BitmapImage;
 	friend ostream& operator<<(ostream&, BitmapImage&);
 };
-

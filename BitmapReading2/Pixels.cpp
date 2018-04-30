@@ -1,3 +1,5 @@
+using namespace std;
+#include <iostream>
 #include "Pixels.h"
 #include "BitmapImage.h"
 
@@ -7,7 +9,7 @@ Pixels::Pixels() {
 	width = height = 0u;
 }
 //Initialization constructor
-Pixels::Pixels(unsigned char **initValues, unsigned width, unsigned height) {
+Pixels::Pixels(const unsigned char **initValues, const unsigned int &width, const unsigned int &height) {
 	if (!initValues)
 		exit(1); //The arg pointer is null
 	values = new unsigned char*[width*height];
@@ -43,15 +45,29 @@ Pixels::Pixels(const Pixels& obj) {
 			values[index][color] = obj.values[index][color];
 	}	
 }
+//Return a color value from pixel number pos
 unsigned char& Pixels::operator()(const unsigned pos, const unsigned color) {
 	if (pos < width*height && color < 3 && values)
 		return values[pos][color];
 	exit(1); //Position doesn't exist or pointer is NULL
 }
+//Returns a 3-element array with the RGB values of pixel pos
 unsigned char* Pixels::operator[](const unsigned pos) {
 	if (pos < width*height && values)
 		return values[pos];
 		exit(1); //Position doesn't exist or pointer is NULL
+}
+ostream& operator<<(ostream &os, BitmapImage& im) {
+	if (im.pixels) {
+		for (unsigned index = 0u; index < im.pixels->width*im.pixels->height; index++) {
+			os << index << ": ";
+			for (unsigned char color = 0u; color < 3u; color++) {
+				os << (unsigned int)im.pixels->values[index][color] << " ";
+			}
+			os << endl;
+		}
+	}
+	return os;
 }
 //Destructor
 Pixels::~Pixels() {

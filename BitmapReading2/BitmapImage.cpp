@@ -1,5 +1,7 @@
+#include <iostream>
 #include "BitmapImage.h"
 #include "Pixels.h"
+using namespace std;
 
 BitmapImage::BitmapImage() {
 	inputFile = NULL;
@@ -26,7 +28,7 @@ BitmapImage::BitmapImage(const char *path) {
 		fread(temp[index], sizeof(unsigned char), 3, inputFile);
 	}
 	fclose(inputFile); //Closes the file and disassociates it
-	pixels = new Pixels(temp, pixels->width, pixels->height); //Creating anonymous object and assigning it to pixels, so now the image's pixel values are in pixels
+	pixels = new Pixels((const unsigned char **)temp, pixels->width, pixels->height); //Creating anonymous object and assigning it to pixels, so now the image's pixel values are in pixels
 	for (unsigned index = 0u; index < pixels->width*pixels->height; index++)
 		delete[] temp[index];
 	delete[] temp;
