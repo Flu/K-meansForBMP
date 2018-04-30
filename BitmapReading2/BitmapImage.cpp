@@ -27,7 +27,7 @@ BitmapImage::BitmapImage(const char *path) {
 			exit(2); //bad allocation or not enough memory
 	}
 	//pixelValues takes the info from tmp - now every pixel's RGB value is stored in a matrix with width*height columns and 3 lines
-	for (unsigned index = 0u, index2 = 0u; index < imageWidth*imageHeight; index++, index2 = 3 * index) {
+	for (unsigned index = 0u, index2 = 0u; index < imageWidth*imageHeight; index++, index2 = 3u * index) {
 		pixelValues[index][0] = tmp[index2];
 		pixelValues[index][1] = tmp[index2 + 1];
 		pixelValues[index][2] = tmp[index2 + 2];

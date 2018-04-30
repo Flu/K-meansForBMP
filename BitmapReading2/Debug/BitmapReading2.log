@@ -1,7 +1,5 @@
-﻿  Source.cpp
-c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(7): error C2365: 'red': redefinition; previous definition was 'enumerator'
-  c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(4): note: see declaration of 'red'
-c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(7): error C2365: 'green': redefinition; previous definition was 'enumerator'
-  c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(4): note: see declaration of 'green'
-c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(8): error C2365: 'blue': redefinition; previous definition was 'enumerator'
-  c:\users\flutu\source\repos\bitmapreading2\bitmapreading2\source.cpp(4): note: see declaration of 'blue'
+﻿  BitmapImage.cpp
+  Pixels.cpp
+  Source.cpp
+  Generating Code...
+  BitmapReading2.vcxproj -> C:\Users\flutu\source\repos\BitmapReading2\Debug\BitmapReading2.exe

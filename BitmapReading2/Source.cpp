@@ -1,4 +1,5 @@
 #include "BitmapImage.h"
+#include "Pixels.h"
 
 enum {
 	red, green, blue
