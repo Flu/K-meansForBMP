@@ -4,6 +4,18 @@
 enum {
 	red, green, blue
 };
+ostream& operator<<(ostream &os, BitmapImage& im) {
+	if (im.pixels) {
+		for (unsigned index = 0u; index < im.pixels->width*im.pixels->height; index++) {
+			os << index << ": ";
+			for (unsigned char color = 0u; color < 3u; color++) {
+				os << (unsigned int)im.pixelValues[index][color] << " ";
+			}
+			os << endl;
+		}
+	}
+	return os;
+}
 
 int main() {
 	BitmapImage image("VENUS.BMP");
