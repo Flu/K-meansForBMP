@@ -5,6 +5,7 @@
 #include <functional>
 #include <math.h>
 #include <fstream>
+using namespace std;
 
 class BitmapImage {
 protected:
@@ -15,5 +16,6 @@ public:
 	BitmapImage();
 	BitmapImage(const char*);
 	~BitmapImage();
+	friend ostream& operator<<(ostream&, BitmapImage&);
 };
 
