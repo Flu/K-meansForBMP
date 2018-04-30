@@ -9,7 +9,7 @@ using namespace std;
 class BitmapImage {
 protected:
 	FILE *inputFile;
-	unsigned char *header, **pixelValues;
+	unsigned char *header;
 	Pixels *pixels;
 public:
 	BitmapImage();

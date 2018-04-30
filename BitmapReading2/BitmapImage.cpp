@@ -3,7 +3,6 @@
 
 BitmapImage::BitmapImage() {
 	inputFile = NULL;
-	pixelValues = NULL;
 	header = NULL;
 	pixels = NULL;
 }
@@ -17,30 +16,26 @@ BitmapImage::BitmapImage(const char *path) {
 	pixels->width = *(unsigned int*)&header[18];
 	pixels->height = *(unsigned int*)&header[22];
 
-	unsigned char* tmp = new unsigned char[3 * pixels->width*pixels->height];
-	fread(tmp, sizeof(unsigned char), 3 * pixels->width*pixels->height, inputFile);
-
-	pixelValues = new unsigned char*[pixels->width*pixels->height]; //matrix for pixel values of size width*height x 3
-	if (!pixelValues)
+	unsigned char **temp = new unsigned char*[pixels->width*pixels->height]; //Temporary matrix for pixel values
+	if (!temp)
 		exit(2); //bad allocation or not enogh memory
 	for (unsigned index = 0u; index < pixels->width*pixels->height; index++) {
-		pixelValues[index] = new unsigned char[3];
-		if (!pixelValues[index])
+		temp[index] = new unsigned char[3];
+		if (!temp[index])
 			exit(2); //bad allocation or not enough memory
+		fread(temp[index], sizeof(unsigned char), 3, inputFile);
 	}
-	//pixelValues takes the info from tmp - now every pixel's RGB value is stored in a matrix with width*height columns and 3 lines
-	for (unsigned index = 0u, index2 = 0u; index < pixels->width*pixels->height; index++, index2 = 3u * index) {
-		pixelValues[index][0] = tmp[index2];
-		pixelValues[index][1] = tmp[index2 + 1];
-		pixelValues[index][2] = tmp[index2 + 2];
-	}
-	pixels = new Pixels(pixelValues, pixels->width, pixels->height);
+	fclose(inputFile); //Closes the file and disassociates it
+	pixels = new Pixels(temp, pixels->width, pixels->height); //Creating anonymous object and assigning it to pixels, so now the image's pixel values are in pixels
+	for (unsigned index = 0u; index < pixels->width*pixels->height; index++)
+		delete[] temp[index];
+	delete[] temp;
 }
 BitmapImage::~BitmapImage() {
 	if (pixels) {
 		for (unsigned index = 0u; index < pixels->width*pixels->height; index++)
-			delete[] pixelValues[index];
-		delete[] pixelValues;
+			delete[] pixels->values[index];
+		delete[] pixels->values;
 	}
 	if (header)
 		delete[] header;

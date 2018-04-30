@@ -21,10 +21,6 @@ Pixels::Pixels(unsigned char **initValues, unsigned width, unsigned height) {
 			values[index][color] = initValues[index][color];
 	}
 }
-//Constructor for pixel values array
-Pixels::Pixels(const unsigned char*) {
-
-}
 //Copy constructor
 Pixels::Pixels(const Pixels& obj) {
 	if (values) { //check if this->values is allocated. If it is, delete it
