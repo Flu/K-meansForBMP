@@ -5,8 +5,7 @@ using namespace std;
 
 int main() {
 	BitmapImage image("VENUS.BMP");
-	std::cout << image;
-
+	image.writeToFile("output.BMP");
 	system("pause");
 	return 0;
 }

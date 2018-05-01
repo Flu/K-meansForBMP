@@ -1,7 +1,5 @@
 #pragma once
 #include <iostream>
-#include <fstream>
-#include "BitmapImage.h"
 using namespace std;
 
 class Pixels {
@@ -10,7 +8,7 @@ private:
 	unsigned char **values;
 public:
 	Pixels();
-	Pixels(const unsigned char**, const unsigned int&, const unsigned int&);
+	Pixels(const unsigned char**, const unsigned int, const unsigned int);
 	Pixels(const Pixels&);
 	unsigned char& operator()(const unsigned, const unsigned);
 	unsigned char* operator[](const unsigned);

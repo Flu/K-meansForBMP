@@ -1,15 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include "BitmapImage.h"
 #include "Pixels.h"
+#include "BitmapImage.h"
 using namespace std;
 
 BitmapImage::BitmapImage() {
-	inputFile = NULL;
+	inputFile = outputFile = NULL;
 	header = NULL;
 	pixels = NULL;
 }
-BitmapImage::BitmapImage(const char *path) {
-	inputFile = fopen(path, "rb");
+BitmapImage::BitmapImage(const char *pathToInput) {
+	inputFile = fopen(pathToInput, "rb");
 	if (!inputFile)
 		exit(1); //invalid path or error opening file
 	header = new unsigned char[_HEADER_SIZE];
@@ -33,10 +34,24 @@ BitmapImage::BitmapImage(const char *path) {
 		delete[] temp[index];
 	delete[] temp;
 }
+//Method for writing in a new file the pixel values and the header - if succesful, returns the number of bytes it had written, if not, returns
+//0 if the arg is NULL, -1 if the path is invalid or the file couldn't be opened
+int BitmapImage::writeToFile(const char* pathToOuput) {
+	if (!pathToOuput)
+		return 0;
+	outputFile = fopen(pathToOuput, "wb");
+	if (!outputFile)
+		return -1;
+	fwrite(header, sizeof(unsigned char), _HEADER_SIZE, outputFile);
+	for (unsigned index = 0u; index < pixels->width*pixels->height; index++)
+		fwrite((*pixels)[index], sizeof(unsigned char), 3, outputFile);
+	fclose(outputFile);
+	return pixels->width*pixels->height;
+}
 BitmapImage::~BitmapImage() {
 	if (pixels) {
 		for (unsigned index = 0u; index < pixels->width*pixels->height; index++)
-			delete[] pixels->values[index];
+			delete[] (*pixels)[index];
 		delete[] pixels->values;
 	}
 	if (header)
