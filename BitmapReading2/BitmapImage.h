@@ -8,7 +8,7 @@ using namespace std;
 class BitmapImage {
 	FILE *inputFile, *outputFile;
 	unsigned char *header;
-	Pixels *pixels;
+	Pixels pixels;
 public:
 	BitmapImage();
 	BitmapImage(const char*);
