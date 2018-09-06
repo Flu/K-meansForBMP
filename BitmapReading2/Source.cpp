@@ -4,10 +4,10 @@
 using namespace std;
 
 int main() {
-	BitmapImage image("lonely3.BMP");
+	BitmapImage image("marbles.bmp");
 	//TODO Here will come the code for K-Means
 
-	image.writeToFile("output.BMP");
+	cout << image.writeToFile("output.BMP") << endl;
 	system("pause");
 	return 0;
 }

@@ -19,15 +19,15 @@ public:
 	~Pixels();
 	friend class BitmapImage;
 };
-ostream& operator<<(ostream &os, BitmapImage& im) {
-	if (im.pixels.isFull()) {
-		for (unsigned index = 0u; index < im.pixels.getWidth()* im.pixels.getHeight(); index++) {
-			os << index << ": ";
-			for (unsigned char color = 0u; color < 3u; color++) {
-				os << im.pixels(index, color) << " ";
-			}
-			os << endl;
-		}
-	}
-	return os;
-}
+//ostream& operator<<(ostream &os, BitmapImage& im) {
+//	if (im.pixels.isFull()) {
+//		for (unsigned index = 0u; index < im.pixels.getWidth()* im.pixels.getHeight(); index++) {
+//			os << index << ": ";
+//			for (unsigned char color = 0u; color < 3u; color++) {
+//				os << im.pixels(index, color) << " ";
+//			}
+//			os << endl;
+//		}
+//	}
+//	return os;
+//}

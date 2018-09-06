@@ -15,8 +15,10 @@ BitmapImage::BitmapImage(const char *pathToInput) {
 	header = new unsigned char[_HEADER_SIZE];
 	fread(header, sizeof(unsigned char), _HEADER_SIZE, inputFile);
 
-	pixels.width = *(unsigned int*)&header[18];
-	pixels.height = *(unsigned int*)&header[22];
+	pixels.width = *(int*)&header[18];
+	cout << pixels.width << " ";
+	pixels.height = *(int*)&header[22];
+	cout << pixels.height << " ";
 	pixels.colorDepth = *(unsigned short*)&header[28];
 	if (pixels.colorDepth != 24)
 		exit(2);
@@ -36,15 +38,17 @@ int BitmapImage::writeToFile(const char* pathToOuput) {
 		return -1;
 	}
 	fwrite(header, sizeof(unsigned char), _HEADER_SIZE, outputFile);
-	unsigned index;
-	for (index = 0u; index < 3*pixels.width*pixels.height; index++) {
-		fwrite(&pixels[index], sizeof(unsigned char), 3, outputFile);
+	unsigned long long index;
+	bool succes = true;
+	for (index = 0ul; index < 3*pixels.width*pixels.height; index++) {
+		if (fwrite(&pixels[index], sizeof(unsigned char), 1, outputFile) != 1)
+			succes = false;
 	}
-	cout << index << endl;
+	cout << index << " " << succes << endl;
 	fclose(outputFile);
 	return pixels.width*pixels.height;
 }
 BitmapImage::~BitmapImage() {
-	if (header)
+	if (header) 
 		delete[] header;
 }

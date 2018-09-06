@@ -32,8 +32,8 @@ Pixels::Pixels(const Pixels& obj) {
 		this->values = NULL;
 	values = new unsigned char[3*width*height];
 	if (!values)
-		exit(1); //Bad allocation
-	for (unsigned index = 0u; index < width*height; index++) //transfer info from obj to *this
+		exit(1); //Bad alloc
+	for (unsigned index = 0u; index < width*height; index++) //Transfer info from obj to *this
 		values[index] = obj.values[index];
 }
 //Return a color value from pixel number pos
@@ -42,11 +42,11 @@ unsigned char& Pixels::operator()(const unsigned pos, const unsigned color) {
 		return values[pos/3 + color];
 	exit(1); //Position doesn't exist or pointer is NULL
 }
-//Returns a 3-element array with the RGB values of pixel pos
+//Returns a byte from the pixel values array
 unsigned char& Pixels::operator[](const unsigned pos) {
-	if (pos < 3*width*height && values)
+	if (pos < 3*this->width*this->height + _HEADER_SIZE && values)
 		return values[pos];
-		exit(1); //Position doesn't exist or pointer is NULL
+	exit(1); //Position doesn't exist or pointer is NULL
 }
 //Getter for image width in pixels
 unsigned int Pixels::getWidth() {
