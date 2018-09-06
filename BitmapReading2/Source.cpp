@@ -1,3 +1,5 @@
+//Test file for my classes
+
 #include "Pixels.h"
 #include "BitmapImage.h"
 #include <iostream>
