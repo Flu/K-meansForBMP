@@ -7,7 +7,8 @@ void startKmeans(const char* filename) {
 	BitmapImage image(filename);
 	image.readHeader();
 
-	std::cout << "Thr image has " << image.getWidth() << "x" << image.getHeight() << " pixels." << std::endl;
+	std::cout << "The image has " << image.getWidth() << "x" << image.getHeight() << " pixels." << std::endl;
+	std::cout << "The bit depth is " << image.getBitDepth() << " bits." << std::endl;
 }
 
 int main(int argc, char** argv) {

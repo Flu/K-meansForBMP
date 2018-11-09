@@ -5,6 +5,7 @@
 class BitmapImage {
 	Pixels values;
 	long width, height;
+	short bitDepth;
 	unsigned char header[HEADER_SIZE + 1];
 	FILE* stream;
 public:
@@ -14,4 +15,5 @@ public:
 
 	const long& getHeight() const;
 	const long& getWidth() const;
+	const short& getBitDepth() const;
 };

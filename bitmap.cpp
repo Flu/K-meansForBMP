@@ -21,6 +21,7 @@ int BitmapImage::readHeader() {
 	
 	this->width = *(int*)&header[18];
 	this->height = *(int*)&header[22];
+	this->bitDepth = *(short*)&header[28];
 	return 0;
 }
 
@@ -36,4 +37,8 @@ const long& BitmapImage::getHeight() const {
 
 const long& BitmapImage::getWidth() const {
 	return this->width;
+}
+
+const short& BitmapImage::getBitDepth() const {
+	return this->bitDepth;
 }
