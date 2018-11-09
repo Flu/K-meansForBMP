@@ -8,6 +8,7 @@ class Pixel {
 public:
 	Pixel();
 	explicit Pixel(const unsigned char&, const unsigned char&, const unsigned char&);
+	Pixel(const Pixel&);
 	unsigned char& operator[](const int&);
 	const unsigned char& operator[](const int&) const;
 };
