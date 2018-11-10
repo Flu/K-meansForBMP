@@ -9,6 +9,8 @@ void startKmeans(const char* filename) {
 
 	std::cout << "The image has " << image.getWidth() << "x" << image.getHeight() << " pixels." << std::endl;
 	std::cout << "The bit depth is " << image.getBitDepth() << " bits." << std::endl;
+
+	image.readArray();
 }
 
 int main(int argc, char** argv) {
@@ -17,7 +19,9 @@ int main(int argc, char** argv) {
 		std::cerr << "No arguments were given" << std::endl;
 		return 1;
 	}
+
 	++argv;
+
 	for (int iter = 0; iter < argc - 1; iter++) {
 		startKmeans(argv[iter]);
 	}

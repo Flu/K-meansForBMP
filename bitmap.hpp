@@ -11,6 +11,8 @@ class BitmapImage {
 public:
 	explicit BitmapImage(const char* filename);
 	int readHeader();
+	long readArray();
+	char& operator[](const int &index);
 	~BitmapImage();
 
 	const long& getHeight() const;
