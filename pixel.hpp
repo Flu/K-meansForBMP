@@ -13,5 +13,6 @@ public:
 	const char& operator[](const int&) const;
 	char* getArray() const;
 	int readArray(FILE *stream, const long &bytesToRead);
+	int writeArray(FILE *stream) const;
 	~Pixels();
 };

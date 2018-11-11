@@ -3,7 +3,7 @@
 BitmapImage::BitmapImage(const char* filename) {
 	this->stream = nullptr;
 	width = height = 0;
-	memset(header, 0, HEADER_SIZE*sizeof(char));
+	memset(header, 0, (HEADER_SIZE+DIB_SIZE)*sizeof(char));
 
 	if (!(this->stream = fopen(filename, "r")))
 		throw "Invalid file";
@@ -14,8 +14,8 @@ int BitmapImage::readHeader() {
 		throw "Invalid file";
 		return -1;
 	}
-	short bytesToRead = HEADER_SIZE;
-	unsigned char* tempPtr = header;
+	short bytesToRead = HEADER_SIZE + DIB_SIZE;
+	char* tempPtr = header;
 	while (bytesToRead -= fread(tempPtr, sizeof(char), bytesToRead, this->stream))
 		tempPtr += HEADER_SIZE - bytesToRead;
 	
@@ -28,7 +28,7 @@ int BitmapImage::readHeader() {
 long BitmapImage::readArray() {
 	if (!this->stream)
 		throw "Stream is empty";
-	if (fseek(this->stream, 40, SEEK_SET) == -1)
+	if (fseek(this->stream, HEADER_SIZE + DIB_SIZE, SEEK_SET) == -1)
 		throw strerror(errno);
 	
 	long bytesToRead = this->width*this->height*(this->bitDepth/8);
@@ -41,10 +41,30 @@ inline char& BitmapImage::operator[](const int& index) {
 	return values[index];
 }
 
+int BitmapImage::writeToFile(const char* filename) const {
+	if (!filename)
+		throw "Invalid filename";
+	FILE* outputStream = fopen(filename, "w");
+	if (!outputStream)
+		throw strerror(errno);
+
+	if (!header)
+		throw "Header wasn't read";
+	if (fwrite(header, sizeof(char), HEADER_SIZE + DIB_SIZE, outputStream) != HEADER_SIZE + DIB_SIZE)
+		throw "Error writing header";
+
+	int ret = values.writeArray(outputStream);
+	if (ret == -2)
+		throw "Byte array was empty";
+	if (ret == 0)
+		throw strerror(errno);
+	
+	fclose(outputStream);
+}
+
 BitmapImage::~BitmapImage() {
 	if (stream)
-		if (fclose(stream) == EOF)
-			throw strerror(errno);
+		fclose(this->stream);
 }
 
 const long& BitmapImage::getHeight() const {
