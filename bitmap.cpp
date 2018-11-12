@@ -34,6 +34,7 @@ long BitmapImage::readArray() {
 	long bytesToRead = this->width*this->height*(this->bitDepth/8);
 
 	values.readArray(stream, bytesToRead);
+	fclose(this->stream);
 	return bytesToRead;
 }
 
