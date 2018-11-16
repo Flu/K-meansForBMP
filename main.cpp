@@ -67,7 +67,7 @@ long double sumDistances(Pixel* pixels, const long &numberOfPixels, double long*
 }
 
 // Chooses centroids with the k-means++ initialization method
-void chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short &clusters) {
+Centroid* chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short &clusters) {
 	if (clusters < 2)
 		throw "Should be a minimum of 2 clusters for this to work";
 	IntRandomEngine<long> engine(0, numberOfPixels);
@@ -104,7 +104,7 @@ void chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short &clu
 		delete[] distances;
 	} // End choosing the next centroid loop
 	
-	delete[] centroids;
+	return centroids;
 }
 
 // Image metadata gets printed to stdout
@@ -113,13 +113,7 @@ void printDetails(const BitmapImage& image) {
 	std::cout << "The bit depth is " << image.getBitDepth() << " bits." << std::endl;
 }
 
-// Reads the file, calls the main k-means methods and writes the file back to disk
-void startKmeans(const char* filename) {
-	BitmapImage image(filename);
-	image.readHeader();
-	printDetails(image);
-	image.readArray();
-
+Pixel* loadPixels(const BitmapImage &image) {
 	long numberOfPixels = image.getWidth()*image.getHeight();
 	Pixel *pixels = new Pixel[numberOfPixels]; // Helper class for working with pixels
 	for (long index = 0; index < numberOfPixels*3; index += 3) {
@@ -127,11 +121,23 @@ void startKmeans(const char* filename) {
 		pixels[index/3].g = image[index + 1];
 		pixels[index/3].b = image[index + 2];
 	}
+	return pixels;
+}
+
+// Reads the file, calls the main k-means methods and writes the file back to disk
+void startKmeans(const char* filename) {
+	BitmapImage image(filename);
+	image.readHeader();
+	printDetails(image);
+	image.readArray();
 	
-	chooseCentroids(pixels, numberOfPixels, 50);
+	Pixel* pixels = loadPixels(image);
+	long numberOfPixels = image.getWidth()*image.getHeight();
+	Centroid* centroids = chooseCentroids(pixels, numberOfPixels, 10);
 
 	// Clean up useless buffers and write to disk
 	delete[] pixels;
+	delete[] centroids;
 	image.writeToFile("results/marbles.bmp");
 }
 

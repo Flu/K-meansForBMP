@@ -16,6 +16,7 @@ public:
 	long readArray();
 	int writeToFile(const char *filename) const;
 	char& operator[](const int &index);
+	const char& operator[](const int &index) const;
 	~BitmapImage();
 
 	const long& getHeight() const;
