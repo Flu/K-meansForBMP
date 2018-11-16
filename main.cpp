@@ -14,7 +14,17 @@ IntegralType IntRandomEngine<IntegralType>::getRandomNumber() {
 		IntegralType ret = distribution(this->generator);
 		distribution.reset();
 		return ret;
-	}
+}
+
+
+// Returns random number in range [startRange, endRange] of real typ
+template<typename RealType>
+RealType RealRandomEngine<RealType>::getRandomNumber() {
+	std::uniform_real_distribution<RealType> distribution(startRange, endRange); 
+	RealType ret = distribution(this->generator);
+	distribution.reset();
+	return ret;
+}
 
 // Converts a Pixel to a Centroid implicitly if needed (downcast operator)
 Pixel::operator Centroid() {
@@ -39,23 +49,60 @@ long chooseClosestCentroid(Pixel &pixel, const Centroid* centers, const short &c
 	return min;
 }
 
+// Normalizes vector - divides all the distances by their sum. Alternatively, you could divide them all
+// by their maximum distance
+void normalizeVector(long double* distances, const long &numberOfPixels, const long double& sum) {
+	for (long index = 0; index < numberOfPixels; index++)
+		distances[index] /= sum;
+}
+
+long double sumDistances(Pixel* pixels, const long &numberOfPixels, double long* dist, Centroid* centroids, short &chosenCentroids) {
+	long double returnSum = 0.l;
+	for (long px = 0l; px < numberOfPixels; px++) {
+			// Now the coordinates for the closest centroid are stored in pixels[px]
+			dist[px] = chooseClosestCentroid(pixels[px], centroids, chosenCentroids);
+			returnSum += dist[px];
+	}
+	return returnSum;
+}
+
 // Chooses centroids with the k-means++ initialization method
 void chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short &clusters) {
+	if (clusters < 2)
+		throw "Should be a minimum of 2 clusters for this to work";
 	IntRandomEngine<long> engine(0, numberOfPixels);
 
+	// Choose random initial centroid
 	Centroid *centroids = new Centroid[clusters];
 	centroids[0] = pixels[engine.getRandomNumber()];
 
-	short chosenCentroids = 1l;
+	short chosenCentroids = 1;
 	for (short clusterno = 1; clusterno < clusters; clusterno++) {
-		double *distances = new double[numberOfPixels]; // Distances from every pixel to its nearest centroid
-		for (long px = 0l; px < numberOfPixels; px++) {
-			// Now the coordinates for the closest centroid are stored in pixels[px]
-			distances[px] = chooseClosestCentroid(pixels[px], centroids, chosenCentroids);
-		}
+		// Distances from every pixel to its nearest centroid and sum the distances
+		long double *distances = new long double[numberOfPixels];
+		long double sum = sumDistances(pixels, numberOfPixels, distances, centroids, chosenCentroids);
+
+		normalizeVector(distances, numberOfPixels, sum);
+
+		// Choose a real number between [0, 1] and iterate all the distances from every data point to
+		// the closest cluster already chosen. Then, choose the first element in the list such that the sum
+		// of the values in the normalized vector (here, distances) up to that element is greaten than or equal
+		// to randNumber. That data point will be the next centroid
+		RealRandomEngine<long double> RealEngine(0.l,1.l);
+		long double randNumber = RealEngine.getRandomNumber();
+
+		long double normSum = 0.l;
+		for (long pxIndex = 0l; pxIndex < numberOfPixels; pxIndex++) {
+			normSum += distances[pxIndex];
+			if (normSum >= randNumber) {
+				centroids[clusterno] = pixels[pxIndex];
+				chosenCentroids++;
+				break;
+			}
+		} // End choosing centroid with probability D^2(x)
 
 		delete[] distances;
-	}
+	} // End choosing the next centroid loop
 	
 	delete[] centroids;
 }

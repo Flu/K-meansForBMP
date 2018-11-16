@@ -6,9 +6,19 @@ class IntRandomEngine {
 	IntegralType startRange, endRange;
 	std::default_random_engine generator;
 public:
-	IntRandomEngine(const long long &startRange, const long long &endRange = std::numeric_limits<IntegralType>::max())
+	IntRandomEngine(const IntegralType &startRange, const IntegralType &endRange = std::numeric_limits<IntegralType>::max())
 		: startRange(startRange), endRange(endRange) {}
 		IntegralType getRandomNumber();
+};
+
+template<class RealType>
+class RealRandomEngine {
+	RealType startRange, endRange;
+	std::default_random_engine generator;
+public:
+	RealRandomEngine(const RealType &startRange, const RealType &endRange = std::numeric_limits<RealType>::max())
+		: startRange(startRange), endRange(endRange) {}
+	RealType getRandomNumber();
 };
 
 struct Pixel {
