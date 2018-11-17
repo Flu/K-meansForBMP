@@ -1,3 +1,4 @@
+#pragma once
 #include "bitmap.hpp"
 
 BitmapImage::BitmapImage(const char* filename) {

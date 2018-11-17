@@ -1,12 +1,6 @@
+#pragma once
 struct Centroid;
 struct Pixel;
-
-std::default_random_engine generator(rand());
-std::uniform_int_distribution<int> distributionI(0,1419*1001 - 1);
-std::uniform_real_distribution<long double> distributionR(0.l,1.l);
-
-auto genI = std::bind(distributionI, generator);
-auto genR = std::bind(distributionR, generator);
 
 struct Pixel {
 	char r, g, b;
@@ -20,3 +14,5 @@ struct Centroid : public Pixel {
 	Centroid() : Pixel() {}
 	Centroid(const char &r, const char &g, const char &b) : Pixel(r, g, b) {}
 };
+
+void converge(Pixel*, const Centroid*, const long&);

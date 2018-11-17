@@ -1,3 +1,4 @@
+#pragma once
 #include "pixel.cpp"
 
 #define HEADER_SIZE 40
