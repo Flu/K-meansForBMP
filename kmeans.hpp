@@ -1,25 +1,12 @@
 struct Centroid;
 struct Pixel;
 
-template <class IntegralType>
-class IntRandomEngine {
-	IntegralType startRange, endRange;
-	std::default_random_engine generator;
-public:
-	IntRandomEngine(const IntegralType &startRange, const IntegralType &endRange = std::numeric_limits<IntegralType>::max())
-		: startRange(startRange), endRange(endRange) {}
-		IntegralType getRandomNumber();
-};
+std::default_random_engine generator(rand());
+std::uniform_int_distribution<int> distributionI(0,1419*1001 - 1);
+std::uniform_real_distribution<long double> distributionR(0.l,1.l);
 
-template<class RealType>
-class RealRandomEngine {
-	RealType startRange, endRange;
-	std::default_random_engine generator;
-public:
-	RealRandomEngine(const RealType &startRange, const RealType &endRange = std::numeric_limits<RealType>::max())
-		: startRange(startRange), endRange(endRange) {}
-	RealType getRandomNumber();
-};
+auto genI = std::bind(distributionI, generator);
+auto genR = std::bind(distributionR, generator);
 
 struct Pixel {
 	char r, g, b;

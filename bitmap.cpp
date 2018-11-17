@@ -41,6 +41,7 @@ long BitmapImage::readArray() {
 inline char& BitmapImage::operator[](const int& index) {
 	return values[index];
 }
+
 inline const char& BitmapImage::operator[](const int& index) const {
 	return values[index];
 }
