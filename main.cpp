@@ -1,4 +1,13 @@
-#include <chrono>
+/*
+Proof of concept program used to show the capabilities of k-means++ clustering algorithm,
+with applications in image processing, for compressing bitmap image files, by reducing the
+number of colors in the image and constructin a pallette of primary colors.
+
+The number of clusters set in the command line are the number of colors ultimately shown
+in the final image.
+Fluturel Adrian, (c) 2018
+*/
+
 #include <functional>
 #include <iostream>
 #include <limits>

@@ -1,3 +1,8 @@
+/* Here are all the declarations of the functions and structs/classes necesarry 
+for the k-means++ algorithm.
+Fluturel Adrian, (c) 2018
+*/
+
 #pragma once
 struct Centroid;
 struct Pixel;

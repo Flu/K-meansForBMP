@@ -1,3 +1,10 @@
+/* Here are all the declarations of the functions and structs/classes necesarry 
+for the k-means initialization algorithm for cluster centres. It uses the k-means++
+algorithm for improved cluster initialization (not random, but probabilistic), and in the
+long run it will converge far quicker with more optimal results.
+Fluturel Adrian, (c) 2018
+*/
+
 #include <random>
 
 std::default_random_engine generator(rand());

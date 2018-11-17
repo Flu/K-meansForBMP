@@ -1,3 +1,8 @@
+/* This header presents the classes and methods for opening, reading and writing to
+the bitmap file that kmeans++ will be used on.
+Fluturel Adrian, (c) 2018
+*/
+
 #pragma once
 #include "pixel.cpp"
 
