@@ -1,4 +1,3 @@
-#pragma once
 #include "kmeans.hpp"
 #include "bitmap.hpp"
 #include "init.hpp"

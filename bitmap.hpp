@@ -4,7 +4,10 @@ Fluturel Adrian, (c) 2018
 */
 
 #pragma once
-#include "pixel.cpp"
+
+#include <stdio.h>
+
+#include "pixel.hpp"
 
 #define HEADER_SIZE 40
 #define DIB_SIZE 14

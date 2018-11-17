@@ -14,9 +14,10 @@ Fluturel Adrian, (c) 2018
 #include <random>
 #include <unistd.h>
 
-#include "bitmap.hpp"
+#include "pixel.cpp"
+#include "bitmap.cpp"
+#include "kmeans.cpp"
 #include "init.cpp"
-#include "kmeans.hpp"
 
 // Converts a Pixel to a Centroid implicitly if needed (downcast operator)
 Pixel::operator Centroid() {

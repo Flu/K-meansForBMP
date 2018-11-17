@@ -5,7 +5,9 @@ long run it will converge far quicker with more optimal results.
 Fluturel Adrian, (c) 2018
 */
 
+#pragma once
 #include <random>
+#include <functional>
 
 std::default_random_engine generator(rand());
 std::uniform_int_distribution<int> distributionI(0,1419*1001 - 1);
