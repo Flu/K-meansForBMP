@@ -19,9 +19,16 @@ Fluturel Adrian, (c) 2018
 #include "kmeans.cpp"
 #include "init.cpp"
 
-// Converts a Pixel to a Centroid implicitly if needed (downcast operator)
-Pixel::operator Centroid() {
-	return Centroid(r, g, b);
+void parseArgs(const int& argc, const char** argv) {
+	// Parse and try to open any file given in the argument
+	for (int iter = 0; iter < argc - 1; iter++) {
+		try {
+			startKmeans(argv[iter]);
+		} catch(const char* err) {
+			std::cerr << "Error happened with file " << argv[iter] << std::endl;
+			std::cerr << err << std::endl;
+		}
+	}
 }
 
 // Computes squared Euclidean distance between two points
@@ -47,7 +54,7 @@ Pixel* loadPixels(const BitmapImage &image) {
 }
 
 // Reads the file, calls the main k-means methods and writes the file back to disk
-void startKmeans(const char* filename) {
+void startKmeans(const char* filename, const short& numberOfClusters = 10) {
 	BitmapImage image(filename);
 	image.readHeader();
 	printDetails(image);
@@ -55,7 +62,7 @@ void startKmeans(const char* filename) {
 	
 	Pixel* pixels = loadPixels(image);
 	long numberOfPixels = image.getWidth()*image.getHeight();
-	Centroid* centroids = chooseCentroids(pixels, numberOfPixels, 10);
+	Centroid* centroids = chooseCentroids(pixels, numberOfPixels, numberOfClusters);
 
 	converge(pixels, centroids, numberOfPixels);
 	// Clean up useless buffers and write to disk
@@ -69,15 +76,7 @@ int main(int argc, char** argv) {
 		std::cerr << "No arguments were given" << std::endl;
 		return 1;
 	}
-
 	++argv;
-	// Parse and try to open any file given in the argument
-	for (int iter = 0; iter < argc - 1; iter++) {
-		try {
-		startKmeans(argv[iter]);
-		} catch (const char* err) {
-			std::cerr << err << std::endl;
-		}
-	}
+	parseArgs(argc, argv);
 	return 0;
 }

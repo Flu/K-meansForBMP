@@ -20,4 +20,5 @@ struct Centroid : public Pixel {
 	Centroid(const char &r, const char &g, const char &b) : Pixel(r, g, b) {}
 };
 
+void startKmeans(const char*, const short&);
 void converge(Pixel*, const Centroid*, const long&);
