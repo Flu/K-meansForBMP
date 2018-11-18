@@ -3,14 +3,12 @@
 #include "init.hpp"
 
 // Calculates distance from pixel to every chosen centroid, returns the minimum
-long chooseClosestCentroid(Pixel &pixel, const Centroid* centers, const short &centersChosen) {
+long chooseClosestCentroid(Pixel &pixel, Centroid* centers, const short &centersChosen) {
 	long min = std::numeric_limits<long>::max();
 	for (short centerIndex = 0; centerIndex < centersChosen; centerIndex++)
 		if (long currDistance = computeDistance(pixel, centers[centerIndex]); currDistance < min) {
 			min = currDistance;
-			pixel.rc = centers[centerIndex].r;
-			pixel.gc = centers[centerIndex].g;
-			pixel.bc = centers[centerIndex].b;
+			pixel.nearestCenter = &centers[centerIndex];
 		}
 	return min;
 }

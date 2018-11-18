@@ -9,9 +9,9 @@ struct Pixel;
 
 struct Pixel {
 	char r, g, b;
-	char rc, gc, bc;
-	Pixel() : r(0), g(0), b(0) {}
-	Pixel(const char &r, const char &g, const char &n) : r(r), g(g), b(b) {}
+	Centroid* nearestCenter;
+	Pixel() : r(0), g(0), b(0), nearestCenter(nullptr) {}
+	Pixel(const char &r, const char &g, const char &n) : r(r), g(g), b(b), nearestCenter(nullptr) {}
 	operator Centroid();
 };
 
@@ -20,5 +20,5 @@ struct Centroid : public Pixel {
 	Centroid(const char &r, const char &g, const char &b) : Pixel(r, g, b) {}
 };
 
-void startKmeans(const char*, const short&);
-void converge(Pixel*, const Centroid*, const long&);
+void startKmeans(const char*, const short& = 10);
+void converge(Pixel*, const long&, const Centroid*, const short&);
