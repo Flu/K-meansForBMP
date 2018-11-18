@@ -45,7 +45,10 @@ Centroid* chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short
 		// Distances from every pixel to its nearest centroid and sum the distances
 		long double *distances = new long double[numberOfPixels];
 		long double sum = sumDistances(pixels, numberOfPixels, distances, centroids, chosenCentroids);
-
+		if (sum == 0) {
+			std::cerr << "Wait a minute" << ", ";
+			sum += 0.0001;
+		}
 		normalizeVector(distances, numberOfPixels, sum);
 
 		// Choose a real number between [0, 1] and iterate all the distances from every data point to
