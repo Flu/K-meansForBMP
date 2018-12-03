@@ -66,8 +66,9 @@ Centroid* chooseCentroids(Pixel* pixels, const long &numberOfPixels, const short
 				break;
 			}
 		} // End choosing centroid with probability D^2(x)
-
-		delete[] distances;
+		if (distances)
+			delete[] distances;
+		distances = nullptr;
 	} // End choosing the next centroid loop
 	
 	return centroids;

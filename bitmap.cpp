@@ -35,6 +35,7 @@ long BitmapImage::readArray() {
 
 	values.readArray(stream, bytesToRead);
 	fclose(this->stream);
+	this->stream = nullptr;
 	return bytesToRead;
 }
 
